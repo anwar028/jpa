@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 
 import com.in.entity.User;
@@ -124,19 +125,43 @@ public class JpaFirstAppApplication {
 		 * allUsersBasedOnLocation.forEach(area-> System.out.println("SQL: "+area));
 		 */
 
-		List<User> findAll = urj.findAll(Sort.by("userId").descending());
+		/*
+		 * List<User> findAll = urj.findAll(Sort.by("userId").descending());
+		 * 
+		 * findAll.forEach(System.out::println);
+		 * 
+		 * System.out.println("------------------------------------");
+		 * 
+		 * List<User> findAll2 = urj.findAll(Sort.by("name"));
+		 * 
+		 * findAll2.forEach(e -> System.out.println("SortbyNames: " + e));
+		 * 
+		 * List<User> sortByNameAndId = urj.findAll(Sort.by(Sort.Order.asc("name"),
+		 * Sort.Order.desc("userId")));
+		 * 
+		 * 
+		 * sortByNameAndId.forEach(e-> System.out.println("sortByNameAndId: "+e));
+		 */
 
-		findAll.forEach(System.out::println);
+		User user = new User();
 
-		System.out.println("------------------------------------");
+		user.setAge(30);
 
-		List<User> findAll2 = urj.findAll(Sort.by("name"));
+		Example<User> example = Example.of(user);
 
-		findAll2.forEach(e -> System.out.println("SortbyNames: " + e));
+		List<User> findall = urj.findAll(example);
 
-		List<User> sortByNameAndId = urj.findAll(Sort.by(Sort.Order.asc("name"), Sort.Order.desc("userId")));
+		findall.forEach(f -> System.out.println(f));
+
+		User user1 = new User();
+
+		user1.setLocation("HYD");
+
+		Example<User> example1 = Example.of(user1);
 		
-		sortByNameAndId.forEach(e-> System.out.println("sortByNameAndId: "+e));
+		List<User> findall1 = urj.findAll(example1);
+		
+		findall1.forEach(System.out::println);
 
 	}
 
